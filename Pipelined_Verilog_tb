@@ -1,0 +1,20 @@
+`timescale 1ns/1ps
+module tb_pipeline_cpu;
+
+    reg clk;
+    pipeline_cpu uut(clk);
+
+    initial begin
+        clk = 0;
+        $display("Time\tR1\tR4\tR5");
+        $monitor("%0dns\t%d\t%d\t%d", $time, uut.reg_file[1], uut.reg_file[4], uut.reg_file[5]);
+
+        #100 $stop;
+    end
+
+    always #5 clk = ~clk;
+
+endmodule
+
+
+

@@ -1,0 +1,23 @@
+module ALU(
+    input [7:0] A, B,
+    input [2:0] ALU_Sel,
+    output reg [7:0] Result,
+    output CarryOut
+);
+    wire [8:0] temp_add = A + B;
+    wire [8:0] temp_sub = A - B;
+
+    always @(*) begin
+        case(ALU_Sel)
+            3'b000: Result = A + B;          // Addition
+            3'b001: Result = A - B;          // Subtraction
+            3'b010: Result = A & B;          // AND
+            3'b011: Result = A | B;          // OR
+            3'b100: Result = ~A;             // NOT
+            default: Result = 8'h00;
+        endcase
+    end
+
+    assign CarryOut = (ALU_Sel == 3'b000) ? temp_add[8] : 
+                    (ALU_Sel == 3'b001) ? temp_sub[8] : 1'b0;
+endmodule

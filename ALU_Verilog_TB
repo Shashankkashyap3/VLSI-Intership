@@ -1,0 +1,33 @@
+
+module tb_alu;
+
+reg [3:0] a, b;
+reg [2:0] sel;
+wire [3:0] result;
+
+alu uut (.a(a),.b(b),.sel(sel),.result(result));
+
+initial begin
+    display("Time\tSel\tA\tB\tResult");
+    monitor("%0dns\t%b\t%b\t%b\t%b", $time, sel, a, b, result);
+
+   
+    a = 4'b0101; b = 4'b0011; sel = 3'b000; #10;            // Test addition
+    
+    a = 4'b1001; b = 4'b0010; sel = 3'b001; #10;             // Test subtraction
+    
+    a = 4'b1100; b = 4'b1010; sel = 3'b010; #10;               // Test AND
+
+    a = 4'b0101; b = 4'b1000; sel = 3'b011; #10;                     // Test OR
+   
+    a = 4'b1111; b = 4'b0000; sel = 3'b100; #10;                     // Test NOT
+
+    stop;
+end
+
+endmodule
+
+
+
+///`timescale 1ns / 1ps
+
